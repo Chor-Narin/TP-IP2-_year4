@@ -1,6 +1,19 @@
 <template>
   <ul class="todoLists">
-    <TodoItem v-for="todo of todos" icon="uil-adobe-alt" :todo="todo" />
+    <template v-if="status == 'completed'">
+      <TodoItem
+        v-for="todo of completedTasks"
+        icon="uil-adobe-alt"
+        :todo="todo"
+      />
+    </template>
+    <template v-else>
+      <TodoItem
+        v-for="todo of pendingTasks"
+        icon="uil-adobe-alt"
+        :todo="todo"
+      />
+    </template>
   </ul>
 </template>
 <script>
@@ -14,8 +27,14 @@ export default {
     return { todoStore };
   },
   name: "TodoList",
+  props: ["status"],
   components: {
     TodoItem,
+  },
+  data() {
+    return {
+      color: "red",
+    };
   },
   async mounted() {
     // we will call action fetchTodos
@@ -23,6 +42,29 @@ export default {
   },
   computed: {
     ...mapState(useTodoStore, ["todos", "countTodos"]),
+    completedTasks() {
+      if (this.todos) {
+        return this.todos.filter((todo) => todo.status == "completed");
+      }
+      return [];
+    },
+    pendingTasks() {
+      if (this.todos) {
+        // if (this.todos.length > 2) {
+        //   this.todos.push({ task: "new" });
+        // }
+        return this.todos.filter((todo) => todo.status == "pending");
+      }
+      return [];
+    },
+  },
+  watch: {
+    todos: {
+      immediate: true,
+      handler: function (dataChanged) {
+        console.log("todos are changed");
+      },
+    },
   },
 };
 </script>

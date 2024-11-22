@@ -38,5 +38,17 @@ export const useTodoStore = defineStore("todo", {
         }
       }
     },
+    addTodo(todo) {
+      this.todos.push({
+        id: this.todos.length + 1,
+        task: todo,
+        status: "pending",
+        time: new Date(),
+      });
+      this.todos = JSON.parse(JSON.stringify(this.todos));
+    },
+    clearAll() {
+      this.todos = [];
+    },
   },
 });

@@ -1,10 +1,14 @@
 <template>
   <div class="container">
-    <AddTodo />
-    <TodoLists />
+    <AddTodo @added="handleAddTodo" />
+    <h3>Pending Tasks:</h3>
+    <TodoLists status="pending" />
+
+    <h3>Completed Tasks:</h3>
+    <TodoLists status="completed" />
     <div class="pending-tasks">
       <span
-        >You have <span class="pending-num"> {{ countTodos }} </span> tasks
+        >You have <span class="pending-num"> {{ nbOfTodo }} </span> tasks
         pending.</span
       >
       <button class="clear-button">Clear All</button>
@@ -19,12 +23,29 @@ import TodoLists from "./components/TodoList.vue";
 import { useTodoStore } from "./stores/todo";
 export default {
   name: "App",
+  setup() {
+    const store = useTodoStore();
+    return {
+      store,
+    };
+  },
   components: {
     AddTodo,
     TodoLists,
   },
   computed: {
-    ...mapState(useTodoStore, ["countTodos"]),
+    ...mapState(useTodoStore, {
+      nbOfTodo: "countTodos",
+    }),
+  },
+  methods: {
+    handleAddTodo(todo) {
+      this.store.addTodo(todo);
+    },
+    clearAllTodos() {
+      console.log("clear");
+      this.store.clearAll();
+    },
   },
 };
 </script>
