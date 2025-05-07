@@ -14,15 +14,17 @@ export const useTodoStore = defineStore("todo", {
           resolve([
             {
               id: 1,
-              task: "Clean house",
-              status: "pending",
-              time: "2023-11-01 11:00:00",
+              name: "Clean house",
+              description: "cleaning house in detail .....",
+              createdAt: "2024-15-07 07:50:00",
+              completedAt: null,
             },
             {
               id: 2,
-              task: "Do homework",
-              status: "completed",
-              time: "2023-11-01 11:00:00",
+              name: "Do homework",
+              description: "Instruction on doing homework ....",
+              createdAt: "2024-05-07 08:00:00",
+              completedAt: "2024-05-07 08:10:00",
             },
           ]);
         }, 1000);
@@ -31,19 +33,20 @@ export const useTodoStore = defineStore("todo", {
     toggleStatus(id) {
       const foundIndex = this.todos.findIndex((t) => t.id == id);
       if (foundIndex >= 0) {
-        if (this.todos[foundIndex].status == "completed") {
-          this.todos[foundIndex].status = "pending";
+        if (this.todos[foundIndex].completedAt != null) {
+          this.todos[foundIndex].completedAt = null;
         } else {
-          this.todos[foundIndex].status = "completed";
+          this.todos[foundIndex].completedAt = new Date().toISOString();
         }
       }
     },
     addTodo(todo) {
       this.todos.push({
         id: this.todos.length + 1,
-        task: todo,
-        status: "pending",
-        time: new Date(),
+        name: todo,
+        description: "description",
+        createdAt: new Date().toISOString(),
+        completedAt: null,
       });
       this.todos = JSON.parse(JSON.stringify(this.todos));
     },

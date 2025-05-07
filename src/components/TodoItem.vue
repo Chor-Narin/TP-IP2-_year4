@@ -1,7 +1,7 @@
 <template>
   <li class="list pending" @click="toggleStatus(todo.id)">
-    <input type="checkbox" :checked="todo.status == 'completed'" />
-    <span class="task">{{ todo.task }}</span>
+    <input type="checkbox" :checked="todo.completedAt != null" />
+    <span class="task">{{ todo.name }}</span>
     <i class="uil" :class="icon"></i>
   </li>
 </template>

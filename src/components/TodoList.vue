@@ -44,7 +44,7 @@ export default {
     ...mapState(useTodoStore, ["todos", "countTodos"]),
     completedTasks() {
       if (this.todos) {
-        return this.todos.filter((todo) => todo.status == "completed");
+        return this.todos.filter((todo) => todo.completedAt != null);
       }
       return [];
     },
@@ -53,7 +53,7 @@ export default {
         // if (this.todos.length > 2) {
         //   this.todos.push({ task: "new" });
         // }
-        return this.todos.filter((todo) => todo.status == "pending");
+        return this.todos.filter((todo) => todo.completedAt == null);
       }
       return [];
     },
