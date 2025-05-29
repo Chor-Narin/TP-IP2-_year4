@@ -15,8 +15,11 @@ export class TasksController {
   constructor(private readonly taskService: TaskService) {}
 
   @Post('create')
-  create(@Body() taskData: Partial<Task>) {
-    return this.taskService.create(taskData);
+  create(
+    @Body() body: { userId: number; name: string; description?: string }
+  ) {
+    const { userId, ...taskData } = body;
+    return this.taskService.create(userId, taskData);
   }
 
   @Get()
