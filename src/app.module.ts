@@ -16,7 +16,6 @@ import { TaskModule } from './task/task.module';
       entities: [User, Task],
       synchronize: true,
     }),
-    ,
     UserModule,
     TaskModule,
   ],
